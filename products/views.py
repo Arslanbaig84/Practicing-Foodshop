@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from .forms import ProductForm
 from .models import Product, ProductImage
 
@@ -15,8 +16,8 @@ def product_form(request):
             for file in files:
                 ProductImage.objects.create(product=product, image=file)
 
-            return redirect('products/product_form.html')
+            return redirect('product_form')
     else:
         form = ProductForm()
 
-    return render(request, 'products/product_form.html', {'form': form})
+        return render(request, 'products/product_form.html', {'form': form})
