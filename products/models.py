@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from users.models import CustomUser
 
 UNITS = [('g', 'g'), ('Kg', 'Kg'), ('ml', 'ml'), ('l', 'l')]
 
@@ -8,6 +9,7 @@ class BaseProductModel(models.Model):
     uid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     create_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='%(class)s_created', default = 0)
 
     class Meta:
         abstract = True #To make sure that django treats it as a class and not a model and doesn't create a table name BaseProductModel
@@ -31,4 +33,3 @@ class ProductMeta(BaseProductModel):
 class ProductImage(BaseProductModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")
     product_images = models.ImageField(upload_to="products")
-
