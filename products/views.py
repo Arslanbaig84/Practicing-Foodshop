@@ -3,8 +3,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .forms import ProductForm
 from .models import Product, ProductImage
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required(login_url="/users/login_user/")
 def product_form(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -17,7 +19,7 @@ def product_form(request):
             for file in files:
                 ProductImage.objects.create(product=product, image=file)
 
-            return redirect('product_form')
+            return redirect(reverse('product_form'))
     else:
         form = ProductForm()
 
