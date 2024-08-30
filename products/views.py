@@ -12,6 +12,7 @@ def product_form(request):
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             product = form.save(commit=False)
+            product.created_by = request.user
             product.save()
 
             # Handle multiple file uploads
@@ -19,8 +20,18 @@ def product_form(request):
             for file in files:
                 ProductImage.objects.create(product=product, image=file)
 
-            return redirect(reverse('product_form'))
+            return redirect('index')
+        else:
+            # If the form is invalid, return the form with errors
+            return render(request, 'products/product_form.html', {'form': form})
     else:
         form = ProductForm()
-
         return render(request, 'products/product_form.html', {'form': form})
+
+    
+
+@login_required(login_url="/users/login_user/")
+def index(request):
+    products = Product.objects.all()
+    return render(request, "products/index.html", {'products':products})
+

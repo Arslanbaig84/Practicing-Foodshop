@@ -1,0 +1,27 @@
+{% extends "products/layout.html" %}
+
+{% block title %}
+Products
+{% endblock %}
+
+{% block body %}
+    <hr>
+    <table class="table table-sm table-info">
+        <tr class="table-info">
+            <th class="bg-primary">Name</th>
+            <th class="bg-primary">Description</th>
+            <th class="bg-primary">Price</th>
+            <th class="bg-primary">Image</th>
+        </tr>
+        {% for product in products %}
+        <tr class="table-light">
+            <td class="bg-primary">{{product.product_name}}</td>
+            <td class="bg-primary">{{product.product_description}}</td>
+            <td class="bg-primary">{{product.product_price}}</td>
+            <td class="bg-primary">
+                <img src="" alt="123">
+            </td>
+        </tr>
+        {% endfor %}
+    </table>  
+{% endblock %}
