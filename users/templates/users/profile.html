@@ -1,0 +1,33 @@
+{% extends "products/layout.html" %}
+
+{% block title %}
+User Profile
+{% endblock %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+        <div style="width: 100%; display: inline-flex;">
+            <h1 style="width: 90%;">Welcome, {{user.last_name}}</h1>
+            <a href="{% url 'edit_profile' %}">Edit Profile</a>
+            <a href="#">Delete Profile</a>
+        </div>
+        <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row">Email</th>
+                <td>{{user.email}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Name</th>
+                <td>{{user.first_name}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Contact</th>
+                <td>{{user.contact}}</td>
+              </tr>
+            </tbody>
+          </table>
+    {% else %}
+        <a href="{% url 'login_user' %}">You are not logged in. Please follow the link for log in.</a>
+    {% endif %}
+{% endblock %}
