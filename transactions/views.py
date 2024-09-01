@@ -1,15 +1,12 @@
-# transactions/views.py
 from django.shortcuts import render, redirect
 from .forms import CartItemForm
-from .models import CartItem
-from products.models import Product
-from django.contrib.auth.decorators import login_required
 
-
-@login_required
 def menu(request):
     if request.method == 'POST':
-        pass
+        form = CartItemForm(request.POST)
+        if form.is_valid():
+            form.save(request.user)
+            return redirect('cart')  # Redirect to your cart or another relevant page
     else:
         form = CartItemForm()
 
