@@ -6,9 +6,13 @@ Menu
 
 {% block body %}
 <h1>Welcome {{ request.user.email }}</h1>
-<form method="post">
+<form method="post" action="{% url 'menu' %}">
     {% csrf_token %}
-    {{form.as_p}}
+    {% for field in form %}
+        <div>
+            {{ field.label_tag }} {{ field }}            
+        </div>
+    {% endfor %}
     <button type="submit">Add to Cart</button>
 </form>
 {% endblock %}
