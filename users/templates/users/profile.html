@@ -7,9 +7,13 @@ User Profile
 {% block body %}
     {% if user.is_authenticated %}
         <div style="width: 100%; display: inline-flex;">
-            <h1 style="width: 90%;">Welcome, {{user.last_name}}</h1>
-            <a href="{% url 'edit_profile' %}">Edit Profile</a>
-            <a href="#">Delete Profile</a>
+            <h1 style="width: 80%;">Welcome, {{user.last_name}}</h1>
+            <a href="{% url 'edit_profile' %}" style="width: 10%;">
+              <button type="button" class="btn btn-primary">Edit Profile</button>
+            </a>
+            <a href="#" style="width: 10%;">
+              <button type="button" class="btn btn-primary">Delete Profile</button>
+            </a>
         </div>
         <table class="table">
             <tbody>
