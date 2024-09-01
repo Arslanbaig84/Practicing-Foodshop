@@ -1,0 +1,14 @@
+{% extends 'products/layout.html' %}
+
+{% block title %}
+Menu
+{% endblock %}
+
+{% block body %}
+<h1>Welcome {{ request.user.email }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Add to Cart</button>
+</form>
+{% endblock %}

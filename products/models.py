@@ -21,6 +21,9 @@ class Product(BaseProductModel):
     product_description = models.TextField(max_length=500)
     product_price = models.PositiveIntegerField()
 
+    def __str__(self):
+        return self.product_name
+
 
 class ProductMeta(BaseProductModel):
     product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name="meta_info")
