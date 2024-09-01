@@ -15,7 +15,8 @@ class CartBaseModel(models.Model):
 
 class CartItem(CartBaseModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
+    order_quantity = models.PositiveIntegerField()
+    total_amount = models.PositiveIntegerField()
 
     def __str__(self):
         return self.product.product_name
