@@ -4,24 +4,22 @@ from users.models import CustomUser
 import uuid
 
 # Create your models here.
-class Cart(models.Model):
+class CartBaseModel(models.Model):
     uid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     create_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='cart')
 
-    def __str__(self):
-        return f"{self.created_by.email} Cart"
+    class Meta:
+        abstract = True #To make sure that django treats it as a class and not a model and doesn't create a table name BaseProductModel
 
-class CartItem(models.Model):
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
+class CartItem(CartBaseModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return self.product.product_name
     
     def get_price(self):
-        return self.product.product_price * self.product.meta_info.product_quantity
+        return self.product.product_price * self.quantity
     
