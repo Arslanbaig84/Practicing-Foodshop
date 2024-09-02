@@ -14,13 +14,11 @@ class CartBaseModel(models.Model):
         abstract = True #To make sure that django treats it as a class and not a model and doesn't create a table name BaseProductModel
 
 class CartItem(CartBaseModel):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='cart_item')
     order_quantity = models.PositiveIntegerField()
     total_amount = models.PositiveIntegerField()
 
     def __str__(self):
-        return self.product.product_name
-    
-    def get_price(self):
-        return self.product.product_price * self.quantity
+        return f"{self.product.name} - {self.ordered_quantity}"
+
     
