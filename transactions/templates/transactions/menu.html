@@ -6,13 +6,20 @@ Menu
 
 {% block body %}
 <h1>Welcome {{ request.user.email }}</h1>
-<form method="post" action="{% url 'menu' %}">
-    {% csrf_token %}
-    {% for field in form %}
-        <div>
-            {{ field.label_tag }} {{ field }}            
-        </div>
+<ul>
+    {% for product in products %}
+        <li>
+            <h2>{{ product.product_name }}</h2>
+            <p>Price: ${{ product.product_price }}</p>
+            <p>Available Quantity: {{ product.product_quantity }}</p>
+            <!-- Form to add the product to the cart -->
+            <form method="POST" action="{% url 'menu' %}">
+                {% csrf_token %}
+                <label for="quantity">Quantity:</label>
+                <input type="number" name="quantity" value="1" min="1" max="{{ product.inventory_quantity }}">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </li>
     {% endfor %}
-    <button type="submit">Add to Cart</button>
-</form>
+</ul>
 {% endblock %}
