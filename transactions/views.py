@@ -1,34 +1,25 @@
-"""from django.shortcuts import render, redirect
-from .forms import CartItemForm
-
-def menu(request):
-    if request.method == 'POST':
-        form = CartItemForm(request.POST)
-        if form.is_valid():
-            form.save(request.user)
-            return redirect('cart')  # Redirect to your cart or another relevant page
-    else:
-        form = CartItemForm()
-
-    return render(request, 'transactions/menu.html', {'form': form})"""
-
 # transactions/views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from products.models import Product
-from .models import CartItem
+from .models import CartItem, Cart
 
 def menu(request):
-    if request.method == "POST":
-        pass
-        product = get_object_or_404(Product, id=product_id)
-        ordered_quantity = int(request.POST.get('quantity', 1))
-
-        # Create or update the CartItem for the selected product
-        cart_item, created = CartItem.objects.get_or_create(product=product)
-        cart_item.ordered_quantity += ordered_quantity
-        cart_item.save()
-
-        return redirect('menu')  # Redirect back to the menu after adding to the cart
-
     products = Product.objects.all()
     return render(request, 'transactions/menu.html', {'products': products})
+
+
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, uid=product_id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+    if not created:
+        cart_item.quantity += 1
+    cart_item.save()
+
+    return redirect('cart')
+
+def cart(request):
+    cart = get_object_or_404(Cart, user=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
+    return render(request, 'transactions/cart.html', {'cart': cart, 'cart_items': cart_items})

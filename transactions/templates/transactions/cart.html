@@ -1,0 +1,19 @@
+{% extends 'products/layout.html' %}
+
+{% block title %}
+Cart
+{% endblock %}
+
+{% block body %}
+<h1>Welcome {{ request.user.email }}</h1>
+<ul>
+    {% for cart_item in cart_items %}
+        <li>
+            {{ cart_item.product.product_name }} - Quantity: {{ cart_item.quantity }}
+        </li>
+    {% endfor %}
+</ul>
+<a href="#">
+    <button class="bg-primary">Place Order</button>
+</a>
+{% endblock %}
