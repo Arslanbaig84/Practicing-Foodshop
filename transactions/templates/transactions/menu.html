@@ -13,7 +13,7 @@ Menu
             <p>Price: ${{ product.product_price }}</p>
             <p>Available Quantity: {{ product.product_quantity }}</p>
             <!-- Form to add the product to the cart -->
-            <form method="POST" action="{% url 'menu' %}">
+            <form method="POST" action="{% url 'add_to_cart' product.uid%}">
                 {% csrf_token %}
                 <label for="quantity">Quantity:</label>
                 <input type="number" name="quantity" value="1" min="1" max="{{ product.inventory_quantity }}">

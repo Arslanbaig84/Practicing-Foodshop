@@ -1,24 +1,26 @@
 from django.db import models
+from users.models import CustomUser  
 from products.models import Product
-from users.models import CustomUser
 import uuid
 
-# Create your models here.
-class CartBaseModel(models.Model):
+class Cart(models.Model):
     uid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    create_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='cart')
-
-    class Meta:
-        abstract = True #To make sure that django treats it as a class and not a model and doesn't create a table name BaseProductModel
-
-class CartItem(CartBaseModel):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='cart_item')
-    order_quantity = models.PositiveIntegerField()
-    total_amount = models.PositiveIntegerField()
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.product.name} - {self.ordered_quantity}"
+        return f"Cart of {self.user.email}"
 
-    
+    def total_price(self):
+        return sum(item.total_price() for item in self.items.all())
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.quantity} x {self.product.product_name}"
+
+    def total_price(self):
+        return self.quantity * self.product.product_price
