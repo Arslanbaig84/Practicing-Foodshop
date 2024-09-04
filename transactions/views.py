@@ -1,5 +1,5 @@
 # transactions/views.py
-from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
 from products.models import Product
 from .models import CartItem, Cart
 from django.contrib.auth.decorators import login_required
