@@ -1,5 +1,5 @@
 # transactions/views.py
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from products.models import Product
 from .models import CartItem, Cart
 from django.contrib.auth.decorators import login_required
@@ -27,3 +27,7 @@ def cart(request):
     cart_items = CartItem.objects.filter(cart=cart)
     cart_price = Cart.total_price(cart)
     return render(request, 'transactions/cart.html', {'cart': cart, 'cart_items': cart_items, 'cart_price':cart_price})
+
+@login_required(login_url="/users/login_user/")
+def success(request):
+    return render(request, "transactions/success.html")
