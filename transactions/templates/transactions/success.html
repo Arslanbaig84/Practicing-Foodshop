@@ -1,0 +1,12 @@
+{% extends 'products/layout.html' %}
+
+{% block title %}
+Success
+{% endblock %}
+
+{% block body %}
+<h1>Order processed successfully.</h1>
+<a href="{% url 'menu' %}">
+    <button class="bg-primary">Back to Menu</button>
+</a>
+{% endblock %}
