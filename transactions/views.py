@@ -22,4 +22,5 @@ def add_to_cart(request, product_id):
 def cart(request):
     cart = get_object_or_404(Cart, user=request.user)
     cart_items = CartItem.objects.filter(cart=cart)
-    return render(request, 'transactions/cart.html', {'cart': cart, 'cart_items': cart_items})
+    cart_price = Cart.total_price(cart)
+    return render(request, 'transactions/cart.html', {'cart': cart, 'cart_items': cart_items, 'cart_price':cart_price})
