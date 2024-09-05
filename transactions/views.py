@@ -30,4 +30,6 @@ def cart(request):
 
 @login_required(login_url="/users/login_user/")
 def success(request):
-    return render(request, "transactions/success.html")
+    if request.method == "POST":
+        
+        return render(request, "transactions/success.html")
