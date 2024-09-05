@@ -31,5 +31,5 @@ def cart(request):
 @login_required(login_url="/users/login_user/")
 def success(request):
     if request.method == "POST":
-        
+#        order = get_object_or_404(Order)
         return render(request, "transactions/success.html")
