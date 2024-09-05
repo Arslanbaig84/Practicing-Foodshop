@@ -6,17 +6,22 @@ Cart
 
 {% block body %}
 <h1>Welcome {{ request.user.email }}</h1>
-<ul>
-    {% for cart_item in cart_items %}
-        <li>
-            {{ cart_item.product.product_name }} - Quantity: {{ cart_item.quantity }}
-        </li>
-    {% endfor %}
-</ul>
-<h5>
-    Total : Rs {{cart_price}}
-</h5>
-<a href="{% url 'success' %}">
-    <button class="bg-primary">Place Order</button>
-</a>
+{% if cart %}
+    <h1>Cart</h1>
+    <p>Total Price: {{ cart_price }}</p>
+    <ul>
+        {% for item in cart_items %}
+            <li>{{ item.product.product_name }} - {{ item.quantity }} - {{ item.product.product_price }}</li>
+        {% endfor %}
+    </ul>
+    <form action="{% url 'success' %}" method="post">
+        {% csrf_token %}
+        <label for="shipping_address">Shipping Address:</label>
+        <textarea id="shipping_address" name="shipping_address" required></textarea>
+        <button type="submit" class="bg-primary">Place Order</button>
+    </form>    
+{% else %}
+    <h1>No Items in Cart</h1>
+    <p>Your cart is empty or inactive.</p>
+{% endif %}
 {% endblock %}
