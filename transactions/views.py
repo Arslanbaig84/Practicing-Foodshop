@@ -58,7 +58,7 @@ def success(request):
                 order=new_order,
                 product=cart_item.product,
                 quantity=cart_item.quantity,
-                price=cart_item.price
+                price=cart_item.product.product_price
             )
 
         # Making cart inactive
