@@ -43,6 +43,19 @@ Edit Profile
             {{form.password2}}
         </div>
     </div>
+
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field in form %}
+                    {% if field.errors %}
+                        <li>{{ field.label }}: {{ field.errors|join:", " }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
     <div class="form-group row">
         <div class="col-sm-10">
           <button type="submit" class="btn btn-primary">Submit</button>
