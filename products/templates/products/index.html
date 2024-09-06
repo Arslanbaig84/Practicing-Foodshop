@@ -28,7 +28,7 @@ Products
             </td>
             {% if user.is_authenticated %}
                 {% if user.is_staff %}
-                    <th class="bg-primary"><a href="{% url 'edit_product' %}">
+                    <th class="bg-primary"><a href="{% url 'edit_product' product.uid %}">
                         <button class="bg-primary">Edit Product</button>
                     </a></th>
                 {% endif %}
