@@ -12,6 +12,11 @@ Products
             <th class="bg-primary">Description</th>
             <th class="bg-primary">Price</th>
             <th class="bg-primary">Image</th>
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <th class="bg-primary">Edit/Delete</th>
+                {% endif %}
+            {% endif %}                
         </tr>
         {% for product in products %}
         <tr class="table-light">
@@ -21,6 +26,13 @@ Products
             <td class="bg-primary">
                 <img src="" alt="123">
             </td>
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <th class="bg-primary"><a href="{% url 'edit_product' %}">
+                        <button class="bg-primary">Edit Product</button>
+                    </a></th>
+                {% endif %}
+            {% endif %}                
         </tr>
         {% endfor %}
     </table>  
