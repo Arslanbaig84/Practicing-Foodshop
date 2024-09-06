@@ -35,3 +35,14 @@ def index(request):
     products = Product.objects.all()
     return render(request, "products/index.html", {'products':products})
 
+
+@login_required(login_url="/users/login_user/")
+def edit_product(request):
+    if request.method == "POST":
+        form = ProductForm(request.POST, instance=request.user)
+        if form.is_valid:
+            form.save()
+            return redirect('index')
+
+    form = ProductForm(instance=request.user)    
+    return render(request, "products/edit_product.html", {'form': form})
