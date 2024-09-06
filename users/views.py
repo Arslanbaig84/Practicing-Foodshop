@@ -54,9 +54,13 @@ def profile(request):
 def edit_profile(request):
     if request.method == "POST":
         form = CustomUserForm(request.POST, instance=request.user)
+        
         if form.is_valid():
             form.save()
-            return redirect('profile')  # Or another URL name as needed
+            return redirect('profile')  # Ensure 'profile' is a valid URL name
+        else:
+            # Print form errors to the console or pass them to the template for debugging
+            print(form.errors)  # You can log this or pass it to the template
     else:
         form = CustomUserForm(instance=request.user)
 
