@@ -11,6 +11,7 @@ Products
             <th class="bg-primary">Name</th>
             <th class="bg-primary">Description</th>
             <th class="bg-primary">Price</th>
+            <th class="bg-primary">Availability</th>
             <th class="bg-primary">Image</th>
             {% if user.is_authenticated %}
                 {% if user.is_staff %}
@@ -23,6 +24,7 @@ Products
             <td class="bg-primary">{{product.product_name}}</td>
             <td class="bg-primary">{{product.product_description}}</td>
             <td class="bg-primary">{{product.product_price}}</td>
+            <td class="bg-primary">{{product.product_availability}}</td>
             <td class="bg-primary">
                 <img src="" alt="123">
             </td>
