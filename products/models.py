@@ -3,6 +3,7 @@ import uuid
 from users.models import CustomUser
 
 UNITS = [('g', 'g'), ('Kg', 'Kg'), ('ml', 'ml'), ('l', 'l')]
+AVAILABILITY = [('breakfast', 'breakfast'), ('lunch', 'lunch'), ('dinner', 'dinner'), ('full_day', 'full_day')]
 
 # Create your models here.
 class BaseProductModel(models.Model):
@@ -20,6 +21,7 @@ class Product(BaseProductModel):
     product_slug = models.SlugField(unique=True)
     product_description = models.TextField(max_length=500)
     product_price = models.PositiveIntegerField()
+    product_availability = models.CharField(max_length=50, choices=AVAILABILITY, default='full_day')
 
     def __str__(self):
         return self.product_name
