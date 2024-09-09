@@ -34,7 +34,7 @@ def product_form(request):
 
 @login_required(login_url="/users/login_user/")
 def index(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(user=request.user)
     return render(request, "products/index.html", {'products':products})
 
 
