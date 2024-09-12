@@ -1,0 +1,33 @@
+{% extends 'products/layout.html' %}
+
+{% block title %}
+Contact
+{% endblock %}
+
+{% block body %}
+<h1>Welcome {{ request.user.email }}</h1>
+<div class="bd-example">
+    <address>
+      <strong>FoodShop, Inc.</strong><br />
+      Empty Plot<br />
+      Jubilee Town Commercial, Lahore<br />
+      <abbr title="Phone">P:</abbr> 0333 444 5556
+    </address>
+  
+    <address>
+      <strong>Full Name</strong><br />
+      <a href="mailto:#">first.last@example.com</a>
+    </address>
+  </div>
+  <h1>Your feedback is valuable to us.</h1>
+  
+  <form method="post", action="{% url 'contact' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        {{form.as_p}}
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+
+  {% endblock %}

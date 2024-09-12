@@ -1,6 +1,6 @@
 from django import forms
 from products.models import Product
-from .models import CartItem
+from .models import CartItem, FeedBack
 
 class CartItemForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -31,3 +31,8 @@ class CartItemForm(forms.Form):
                     quantity=quantity,
                     created_by=user
                 )
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = FeedBack
+        fields = ['subject', 'feedback']
