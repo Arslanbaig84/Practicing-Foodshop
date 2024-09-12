@@ -62,5 +62,6 @@ class OrderItem(models.Model):
 class FeedBack(models.Model):
     uid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
+    subject = models.CharField(max_length=20, blank=False, null=False)
     feedback = models.TextField(max_length=500, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
