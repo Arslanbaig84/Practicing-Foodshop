@@ -3,7 +3,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from products.models import Product
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from .models import Cart, CartItem, Order, OrderItem
+from .models import Cart, CartItem, Order, OrderItem, FeedBack
+from .forms import FeedbackForm
 
 @login_required(login_url="/users/login_user/")
 def menu(request):
@@ -69,3 +70,8 @@ def success(request):
         cart_items.delete()
 
     return render(request, "transactions/success.html", {'message': "Order placed successfully!"})
+
+@login_required(login_url="/users/login_user/")
+def contact(request):
+    form = FeedbackForm()
+    return render(request, "transactions/contact.html", {'form': form})

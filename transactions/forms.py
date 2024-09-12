@@ -1,4 +1,4 @@
-from django import forms, 
+from django import forms
 from products.models import Product
 from .models import CartItem, FeedBack
 
@@ -35,4 +35,4 @@ class CartItemForm(forms.Form):
 class FeedbackForm(forms.ModelForm):
     class Meta:
         model = FeedBack
-        fields = ['feedback']
+        fields = ['subject', 'feedback']
