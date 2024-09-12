@@ -73,5 +73,12 @@ def success(request):
 
 @login_required(login_url="/users/login_user/")
 def contact(request):
+    if request.method == "POST":
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            feedback = form.save(commit=False)  # Don't save the form yet
+            feedback.user = request.user  # Assign the current logged-in user
+            feedback.save()  # Now save it with the user information            
+            return redirect('menu')
     form = FeedbackForm()
     return render(request, "transactions/contact.html", {'form': form})
