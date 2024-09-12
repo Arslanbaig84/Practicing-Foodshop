@@ -58,12 +58,9 @@ class OrderItem(models.Model):
     def __str__(self):
         return f"{self.product.product_name} ({self.quantity})"
 
-"""class OrderItem(models.Model):
-    order = models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.PROTECT)  # Protect to prevent deletion of product after the order
-    quantity = models.PositiveIntegerField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
 
-    def __str__(self):
-        return f"{self.product_name} ({self.quantity})"
-"""
+class FeedBack(models.Model):
+    uid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
+    feedback = models.TextField(max_length=500, blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
