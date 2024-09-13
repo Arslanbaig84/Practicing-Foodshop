@@ -7,12 +7,18 @@ User Profile
 {% block body %}
     {% if user.is_authenticated %}
         <div style="width: 100%; display: inline-flex;">
-            <h1 style="width: 80%;">Welcome, {{user.last_name}}</h1>
-            <a href="{% url 'edit_profile' %}" style="width: 10%;">
+            <h1 style="width: 75%;">Welcome, {{user.last_name}}</h1>
+            <a href="{% url 'edit_profile' %}" style="width: 24%;">
               <button type="button" class="btn btn-primary">Edit Profile</button>
             </a>
             <a href="#" style="width: 10%;">
               <button type="button" class="btn btn-primary">Delete Profile</button>
+            </a>
+            <a href="{% url 'cart' %}" style="width: 10%;">
+              <button type="button" class="btn btn-primary">Cart</button>
+            </a>
+            <a href="{% url 'order_status' %}" style="width: 10%;">
+              <button type="button" class="btn btn-primary">Order Status</button>
             </a>
         </div>
         <table class="table">
