@@ -1,0 +1,18 @@
+{% extends 'products/layout.html' %}
+
+{% block title %}
+Status
+{% endblock %}
+
+{% block body %}
+<h1>Order Status</h1>
+<ul>
+    {% for order in orders %}
+    <li>
+        Order ID: {{ order.id }}<br>
+        User: {{ order.user.email }}<br>
+        Total Price: {{ order.total_price }}<br>
+        Order Date: {{ order.created_at|date:"Y-m-d" }}<br>
+    </li>
+    {% endfor %}
+</ul>{% endblock %}
