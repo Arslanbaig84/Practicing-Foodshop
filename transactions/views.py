@@ -11,17 +11,31 @@ def menu(request):
     products = Product.objects.all()
     return render(request, 'transactions/menu.html', {'products': products})
 
+
 @login_required(login_url="/users/login_user/")
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, uid=product_id)
-    cart, created = Cart.objects.get_or_create(user=request.user)
-
+    
+    # Try to get the existing active cart for the user
+    try:
+        cart = Cart.objects.get(user=request.user, is_active=True)
+    except Cart.DoesNotExist:
+        # No active cart found, so create a new one
+        cart = Cart.objects.create(user=request.user, is_active=True)
+    
+    # Check if the product is already in the cart
     cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+    
     if not created:
-        cart_item.quantity += 1
-    cart_item.save()
-
-    return redirect('cart')
+        # If the item already exists, just update the quantity
+        cart_item.quantity += int(request.POST.get('quantity', 1))
+        cart_item.save()
+    else:
+        # If the item is newly added, set the quantity
+        cart_item.quantity = int(request.POST.get('quantity', 1))
+        cart_item.save()
+    
+    return redirect('cart')  # or wherever you want to redirect after adding the item
 
 @login_required(login_url="/users/login_user/")
 def cart(request):
@@ -63,11 +77,7 @@ def success(request):
             )
 
         # Making cart inactive
-        cart.is_active = False
-        cart.save()
-
-        # Remove cart items
-        cart_items.delete()
+        cart.delete()
 
     return render(request, "transactions/success.html", {'message': "Order placed successfully!"})
 
@@ -87,5 +97,5 @@ def contact(request):
 
 @login_required(login_url="/users/login_user/")
 def order_status(request):
-    order = Order.objects.filter(user = request.user)
-    return render(request, "transactions/order_status.html", {'order': order})
+    orders = Order.objects.filter(user = request.user)
+    return render(request, "transactions/order_status.html", {'orders': orders})

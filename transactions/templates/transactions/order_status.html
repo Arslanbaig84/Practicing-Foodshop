@@ -9,10 +9,12 @@ Status
 <ul>
     {% for order in orders %}
     <li>
-        Order ID: {{ order.id }}<br>
+        Order ID: {{ order.uid }}<br>
         User: {{ order.user.email }}<br>
         Total Price: {{ order.total_price }}<br>
         Order Date: {{ order.created_at|date:"Y-m-d" }}<br>
+        Order Status: {{order.status}}
     </li>
     {% endfor %}
-</ul>{% endblock %}
+</ul>
+{% endblock %}
