@@ -5,8 +5,25 @@ Cart
 {% endblock %}
 
 {% block body %}
-<h1>Welcome {{ request.user.email }}</h1>
-{% if cart %}
+
+{% if user.is_authenticated %}
+<div style="width: 100%; display: inline-flex;">
+    <h1 style="width: 75%;">Welcome, {{user.last_name}}</h1>
+    <a href="{% url 'edit_profile' %}" style="width: 24%;">
+      <button type="button" class="btn btn-primary">Edit Profile</button>
+    </a>
+    <a href="#" style="width: 10%;">
+      <button type="button" class="btn btn-primary">Delete Profile</button>
+    </a>
+    <a href="{% url 'cart' %}" style="width: 10%;">
+      <button type="button" class="btn btn-primary">Cart</button>
+    </a>
+    <a href="{% url 'order_status' %}" style="width: 10%;">
+      <button type="button" class="btn btn-primary">Order Status</button>
+    </a>
+</div>
+
+    {% if cart %}
     <h1>Cart</h1>
     <p>Total Price: {{ cart_price }}</p>
     <ul>
@@ -23,5 +40,6 @@ Cart
 {% else %}
     <h1>No Items in Cart</h1>
     <p>Your cart is empty or inactive.</p>
+    {% endif %}
 {% endif %}
 {% endblock %}
