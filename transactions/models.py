@@ -38,7 +38,7 @@ class Order(models.Model):
     ]
     
     uid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name='orders')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)

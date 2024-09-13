@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from products.models import Product
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from .models import Cart, CartItem, Order, OrderItem, FeedBack
+from .models import Cart, CartItem, Order, OrderItem
 from .forms import FeedbackForm
 
 @login_required(login_url="/users/login_user/")
@@ -71,6 +71,7 @@ def success(request):
 
     return render(request, "transactions/success.html", {'message': "Order placed successfully!"})
 
+
 @login_required(login_url="/users/login_user/")
 def contact(request):
     if request.method == "POST":
@@ -82,3 +83,9 @@ def contact(request):
             return redirect('menu')
     form = FeedbackForm()
     return render(request, "transactions/contact.html", {'form': form})
+
+
+@login_required(login_url="/users/login_user/")
+def order_status(request):
+    order = Order.objects.filter(user = request.user)
+    return render(request, "transactions/order_status.html", {'order': order})
