@@ -39,12 +39,22 @@ def add_to_cart(request, product_id):
 
 @login_required(login_url="/users/login_user/")
 def cart(request):
-    cart = get_object_or_404(Cart, user=request.user)
-    if cart.is_active == True:
+    user = request.user
+    # Use filter and get to handle cases where cart might not exist
+    cart = Cart.objects.filter(user=user).first()
+    
+    if not cart:
+        # If cart doesn't exist, return an empty cart view
+        return render(request, "transactions/cart.html", {'cart': None, 'cart_items': [], 'cart_price': "Nil"})
+    
+    if cart.is_active:
         cart_items = CartItem.objects.filter(cart=cart)
-        cart_price = Cart.total_price(cart)
-        return render(request, 'transactions/cart.html', {'cart': cart, 'cart_items': cart_items, 'cart_price':cart_price})
-    return render(request, "transactions/cart.html", {'cart': None, 'cart_items': [], 'cart_price': "Nill"})
+        cart_price = Cart.total_price(cart)  # Ensure this method exists and is correct
+        return render(request, 'transactions/cart.html', {'cart': cart, 'cart_items': cart_items, 'cart_price': cart_price})
+    else:
+        # If the cart is not active, also show an empty cart
+        return render(request, "transactions/cart.html", {'cart': None, 'cart_items': [], 'cart_price': "Nil"})
+
 
 
 @login_required(login_url="/users/login_user/")
